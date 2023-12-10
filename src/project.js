@@ -1,14 +1,20 @@
-import { addISOWeekYears } from 'date-fns';
-import {createDOM, removeDOM, parseDate} from './helperFunctions.js'; 
+import {createDOM, removeDOM, parseDate, retrieveFromLS, saveToLS} from './helperFunctions.js'; 
 import todo from './todo.js'; 
 
 export function Project(title){
-
+    this.title = title;
     this.toDoList = []; 
 
     this.addToDo = (toDo) => {
+        this.toDoList = retrieveFromLS(title);
         this.toDoList.push(toDo); 
-        localStorage.setItem(title, JSON.stringify(this.toDoList))
+        saveToLS(title, this.toDoList); 
+    }
+
+    this.deleteToDo = (index) => {
+        this.toDoList = retrieveFromLS(title); 
+        this.toDoList.splice(index, 1); 
+        saveToLS(title, this.toDoList);
     }
 
     this.awaitSubmission = () => {
@@ -36,12 +42,8 @@ export function Project(title){
     }
 
     this.removeForm = () => {
-        removeDOM(["id", "title"]); 
-        removeDOM(["id", "desc"]); 
-        removeDOM(["id", "datepicker"]); 
-        removeDOM(["id", "priority"]); 
-        removeDOM(["id", "submit"]); 
+        const id = ["title", "desc", "datepicker", "priority", "submit"]; 
+        for(let i = 0; i < id.length; i++) removeDOM(["id", id[i]]); 
     }
 
-    
 }

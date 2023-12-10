@@ -1,4 +1,5 @@
-import { format } from "date-fns";
+import { format, parseJSON, isToday, isThisWeek } from "date-fns";
+import todo from "./todo";
 
 export function strigifyDate(date){
     return format(date, "dd/MM/yyyy"); 
@@ -43,4 +44,75 @@ export function parseDate(date){
     let m = parseInt(dateInfo[1]); 
     dateInfo[1] = String(m-1); 
     return dateInfo;
+}
+
+export function retrieveFromLS(key){
+    if(localStorage.getItem(key)){
+        let toDoList = JSON.parse(localStorage.getItem(key));
+        toDoList.forEach((element) => {
+            element.dueDate = parseJSON(element.dueDate); 
+        });
+
+        switch(key){
+            case "Today":{
+                console.log("here"); 
+                toDoList = removeNotToday(toDoList); 
+                break;
+            }
+
+            case "Weekly":{
+                toDoList = removeNotThisWeek(toDoList); 
+                break; 
+            }
+        }
+        return toDoList;
+    }
+}
+
+export function saveToLS(key, object){
+    localStorage.setItem(key, JSON.stringify(object)); 
+}
+
+export function retrieveDailyTasks(projects){
+    let dueDateToday = []; 
+    for(let i = 0; i < projects.length; i++){
+        projects[i].toDoList = retrieveFromLS(projects[i].title); 
+        projects[i].toDoList.forEach((element) => {
+            if(isToday(element.dueDate)){
+                dueDateToday.push(element); 
+            }
+        })
+    }
+    return dueDateToday; 
+}
+
+export function retrieveWeeklyTasks(projects){
+    let dueDateWeek = []; 
+    for(let i = 0; i < projects.length; i++){
+        projects[i].toDoList = retrieveFromLS(projects[i].title); 
+        projects[i].toDoList.forEach((element) => {
+            if(isThisWeek(element.dueDate)){
+                dueDateWeek.push(element); 
+            }
+        })
+    }
+    return dueDateWeek; 
+}
+
+export function removeNotToday(toDoList){
+    for(let i = 0; i < toDoList.length; i++){
+        if(!isToday(toDoList[i].dueDate)){
+            toDoList.splice(i, 1); 
+        }
+    }
+    return toDoList;
+}
+
+export function removeNotThisWeek(toDoList){
+    for(let i = 0; i < toDoList.length; i++){
+        if(!isThisWeek(toDoList[i].dueDate)){
+            toDoList.splice(i, 1); 
+        }
+    }
+    return toDoList; 
 }

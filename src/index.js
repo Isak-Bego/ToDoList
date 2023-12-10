@@ -1,15 +1,17 @@
-import todo from './todo.js';
-import { strigifyDate, createDOM, parseDate, removeDOM } from './helperFunctions.js';
 import {Project} from './project.js';
+import {retrieveDailyTasks, retrieveWeeklyTasks } from './helperFunctions.js';
 
 let currentProject; 
+let projects = [new Project("Today"), new Project("Weekly"), new Project("Gym"), new Project("Test")]
+let dueDateToday = retrieveDailyTasks(projects)
+let dueDateWeek = retrieveWeeklyTasks(projects)
 
 
+console.log(dueDateToday); 
+console.log(dueDateWeek);  
 
-let todayProject = new Project("Today"); 
-let weeklyProject = new Project("Weekly")
-let gymProjects = new Project("Gym"); 
-currentProject = weeklyProject; 
+
+currentProject = projects[0]; 
 currentProject.createForm(); 
 
 
