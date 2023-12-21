@@ -47,8 +47,9 @@ export function parseDate(date){
 }
 
 export function retrieveFromLS(key){
-    if(localStorage.getItem(key)){
-        let toDoList = JSON.parse(localStorage.getItem(key));
+    let toDoList = []; 
+    if(localStorage.getItem(key) != null){
+        toDoList = JSON.parse(localStorage.getItem(key));
         toDoList.forEach((element) => {
             element.dueDate = parseJSON(element.dueDate); 
         });
@@ -65,8 +66,8 @@ export function retrieveFromLS(key){
                 break; 
             }
         }
-        return toDoList;
     }
+    return toDoList;
 }
 
 export function saveToLS(key, object){
@@ -76,12 +77,12 @@ export function saveToLS(key, object){
 export function retrieveDailyTasks(projects){
     let dueDateToday = []; 
     for(let i = 0; i < projects.length; i++){
-        projects[i].toDoList = retrieveFromLS(projects[i].title); 
-        projects[i].toDoList.forEach((element) => {
-            if(isToday(element.dueDate)){
-                dueDateToday.push(element); 
-            }
-        })
+            projects[i].toDoList = retrieveFromLS(projects[i].title); 
+            projects[i].toDoList.forEach((element) => {
+                if(isToday(element.dueDate)){
+                    dueDateToday.push([projects[i].title, element]); 
+                }
+            })
     }
     return dueDateToday; 
 }
@@ -89,12 +90,12 @@ export function retrieveDailyTasks(projects){
 export function retrieveWeeklyTasks(projects){
     let dueDateWeek = []; 
     for(let i = 0; i < projects.length; i++){
-        projects[i].toDoList = retrieveFromLS(projects[i].title); 
-        projects[i].toDoList.forEach((element) => {
-            if(isThisWeek(element.dueDate)){
-                dueDateWeek.push(element); 
-            }
-        })
+            projects[i].toDoList = retrieveFromLS(projects[i].title); 
+            projects[i].toDoList.forEach((element) => {
+                if(isThisWeek(element.dueDate)){
+                    dueDateWeek.push([projects[i].title, element]); 
+                }
+            })
     }
     return dueDateWeek; 
 }

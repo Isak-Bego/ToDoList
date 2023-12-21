@@ -7,14 +7,28 @@ export function Project(title){
 
     this.addToDo = (toDo) => {
         this.toDoList = retrieveFromLS(title);
+        if(this.toDoList.length != 0) {
+            toDo.id = this.toDoList[this.toDoList.length-1].id + 1;
+        }  
+        else toDo.id = 1;  
         this.toDoList.push(toDo); 
         saveToLS(title, this.toDoList); 
     }
 
-    this.deleteToDo = (index) => {
+    this.deleteToDo = (id) => {
+        let index;
         this.toDoList = retrieveFromLS(title); 
-        this.toDoList.splice(index, 1); 
-        saveToLS(title, this.toDoList);
+        console.log("Fuck this shit", this.toDoList);
+        let toDos = this.toDoList.filter(element => {
+            if(element.id == id){
+                return element;
+            }
+        })
+        if(toDos.length != 0){
+            index = this.toDoList.indexOf(toDos[0]);    
+            this.toDoList.splice(index, 1); 
+            saveToLS(title, this.toDoList);
+        }else ("Element with the specified id does not exist!"); 
     }
 
     this.awaitSubmission = () => {
