@@ -6,7 +6,6 @@ export function Project(title){
     this.toDoList = []; 
 
     this.addToDo = (toDo) => {
-        this.toDoList = retrieveFromLS(title);
         if(this.toDoList.length != 0) {
             toDo.id = this.toDoList[this.toDoList.length-1].id + 1;
         }  
@@ -17,8 +16,6 @@ export function Project(title){
 
     this.deleteToDo = (id) => {
         let index;
-        this.toDoList = retrieveFromLS(title); 
-        console.log("Fuck this shit", this.toDoList);
         let toDos = this.toDoList.filter(element => {
             if(element.id == id){
                 return element;
@@ -41,7 +38,6 @@ export function Project(title){
             const priority = document.querySelector("#priority").value; 
 
             this.addToDo(todo(title, description, date, priority));  
-            console.log(this.toDoList);
             this.removeForm(); 
         }); 
     }

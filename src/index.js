@@ -1,17 +1,20 @@
-import {Project} from './project.js';
 import {retrieveDailyTasks, retrieveWeeklyTasks } from './helperFunctions.js';
+import { ProjectManager } from './projectManager.js';
 
-let currentProject; 
-let projects = [new Project("Today"), new Project("Weekly"), new Project("Gym"), new Project("Test")];
-let dueDateToday = retrieveDailyTasks(projects);
-let dueDateWeek = retrieveWeeklyTasks(projects);
+let currentProject = "All"; 
+let pm = new ProjectManager(); 
+pm.initialize(); 
 
-console.log(dueDateToday); 
-console.log(dueDateWeek);  
-// console.log(projects[2]); 
-currentProject = projects[2]; 
-currentProject.deleteToDo(3); 
-currentProject.createForm(); 
+
+
+// let dueDateToday = retrieveDailyTasks(pm.projects);
+// let dueDateWeek = retrieveWeeklyTasks(pm.projects);
+
+// console.log(dueDateToday); 
+// console.log(dueDateWeek); 
+// console.log(pm.projects); 
+// currentProject = pm.projects[2]; 
+// currentProject.createForm(); 
 
 
 

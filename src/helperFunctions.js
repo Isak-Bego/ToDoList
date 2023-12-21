@@ -77,7 +77,6 @@ export function saveToLS(key, object){
 export function retrieveDailyTasks(projects){
     let dueDateToday = []; 
     for(let i = 0; i < projects.length; i++){
-            projects[i].toDoList = retrieveFromLS(projects[i].title); 
             projects[i].toDoList.forEach((element) => {
                 if(isToday(element.dueDate)){
                     dueDateToday.push([projects[i].title, element]); 
@@ -89,8 +88,7 @@ export function retrieveDailyTasks(projects){
 
 export function retrieveWeeklyTasks(projects){
     let dueDateWeek = []; 
-    for(let i = 0; i < projects.length; i++){
-            projects[i].toDoList = retrieveFromLS(projects[i].title); 
+    for(let i = 0; i < projects.length; i++){ 
             projects[i].toDoList.forEach((element) => {
                 if(isThisWeek(element.dueDate)){
                     dueDateWeek.push([projects[i].title, element]); 
