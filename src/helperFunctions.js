@@ -48,8 +48,10 @@ export function parseDate(date){
 
 export function retrieveFromLS(key){
     let toDoList = []; 
-    if(localStorage.getItem(key) != null){
-        toDoList = JSON.parse(localStorage.getItem(key));
+    let td = JSON.parse(localStorage.getItem(key))[1]; 
+    console.log(td); 
+    if(td.length != 0){
+        toDoList = td;
         toDoList.forEach((element) => {
             element.dueDate = parseJSON(element.dueDate); 
         });
@@ -68,6 +70,10 @@ export function retrieveFromLS(key){
         }
     }
     return toDoList;
+}
+
+export function retrieveOFromLS(title){
+    return JSON.parse(localStorage.getItem(title))[0]; 
 }
 
 export function saveToLS(key, object){
@@ -114,4 +120,10 @@ export function removeNotThisWeek(toDoList){
         }
     }
     return toDoList; 
+}
+
+export function removeAllChildNodes(parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
 }

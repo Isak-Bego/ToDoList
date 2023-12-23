@@ -1,5 +1,8 @@
 import Logo from './assets/todolist_logo.svg'; 
-import {getYear} from 'date-fns'; 
+import Bin from './assets/trashCan.png'
+import {add, getYear} from 'date-fns'; 
+import { removeAllChildNodes } from './helperFunctions';
+import {pm, dg, currentProject} from './index.js'; 
 
 export function DOMgenerator(){
 
@@ -30,11 +33,15 @@ export function DOMgenerator(){
         this.renderProject("+ Add Project"); 
         let addProject = document.querySelector(".projectSectionElement"); 
         addProject.classList.add("addProject"); 
+        addProject.addEventListener("click", (event) => {
+            document.querySelector(".projectForm").classList.toggle("visible"); 
+        });
         this.renderProject("All");  
-        document.querySelectorAll(".projectSectionElement")[1].classList.add("active"); 
+        if (currentProject == "All") document.querySelectorAll(".projectSectionElement")[1].classList.toggle("active"); 
         for(let i = 0; i < projects.length; i++){
             this.renderProject(projects[i].title); 
         }
+        this.renderAddProjectForm(); 
     }
 
     this.renderTaskSection = () => {
@@ -68,6 +75,49 @@ export function DOMgenerator(){
     this.renderProject = (title) => {
         let element = this.createDiv("projectSectionElement"); 
         element.innerText = title; 
+        if(title != "All" && title != "+ Add Project" && title != "Today" && title != "Weekly"){
+            let bin = document.createElement("img"); 
+            bin.src = Bin;
+            element.appendChild(bin); 
+            bin.addEventListener("click", (event) => {
+                pm.deleteProject(title); 
+                removeAllChildNodes(document.querySelector(".projectSection")); 
+                this.renderProjectSection(pm.projects); 
+                event.stopPropagation(); 
+            })
+        }
+
+        element.addEventListener("click", () => {
+            currentProject = title; 
+
+        })
         this.appendKid(".projectSection", element); 
+        
+    }
+
+    this.renderAddProjectForm = () => {
+        let element = this.createDiv("projectForm"); 
+        this.appendKid(".addProject", element);
+        let inp = document.createElement("input"); 
+        inp.classList.add("newProjectName"); 
+        inp.setAttribute("type", "text"); 
+        this.appendKid(".projectForm", inp); 
+        let sub = document.createElement("button"); 
+        sub.innerText = "ADD"; 
+        sub.classList.add("addProjectButton"); 
+        this.appendKid(".projectForm", sub); 
+
+        inp.addEventListener("click", (event) => {
+            event.stopPropagation();
+        })
+
+        sub.addEventListener("click", (event) => {
+            let title = document.querySelector(".newProjectName").value; 
+            document.querySelector(".newProjectName").value = ""; 
+            pm.addProject(title); 
+            console.log("added"); 
+            document.querySelector(".projectForm").classList.toggle("visible");
+            event.stopPropagation(); 
+        })
     }
 }

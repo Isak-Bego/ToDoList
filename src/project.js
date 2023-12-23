@@ -3,6 +3,7 @@ import todo from './todo.js';
 
 export function Project(title){
     this.title = title;
+    this.order;
     this.toDoList = []; 
 
     this.addToDo = (toDo) => {
@@ -11,7 +12,7 @@ export function Project(title){
         }  
         else toDo.id = 1;  
         this.toDoList.push(toDo); 
-        saveToLS(title, this.toDoList); 
+        saveToLS(title, [this.order, this.toDoList]); 
     }
 
     this.deleteToDo = (id) => {
@@ -24,7 +25,7 @@ export function Project(title){
         if(toDos.length != 0){
             index = this.toDoList.indexOf(toDos[0]);    
             this.toDoList.splice(index, 1); 
-            saveToLS(title, this.toDoList);
+            saveToLS(title, [this.order, this.toDoList]);
         }else ("Element with the specified id does not exist!"); 
     }
 

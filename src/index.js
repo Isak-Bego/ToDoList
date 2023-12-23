@@ -1,16 +1,13 @@
-import {retrieveDailyTasks, retrieveWeeklyTasks } from './helperFunctions.js';
+import {removeAllChildNodes, retrieveDailyTasks, retrieveWeeklyTasks } from './helperFunctions.js';
 import { ProjectManager } from './projectManager.js';
 import { DOMgenerator } from './DOMgenerator.js';
 import './style.css'; 
 
-let currentProject = "All"; 
-let pm = new ProjectManager(); 
-let dg = new DOMgenerator(); 
+export let currentProject = "All"; 
+export let dg = new DOMgenerator();
+export let pm = new ProjectManager();  
 pm.initialize(); 
 dg.renderDocument(pm.projects); 
-
-
-
 
 
 // let dueDateToday = retrieveDailyTasks(pm.projects);

@@ -3,6 +3,10 @@
     margin: 0; 
 }
 
+body{
+    overflow: hidden;
+}
+
 header{
     background-color: black;
     padding-top: 0.65em;
@@ -58,6 +62,10 @@ footer{
     margin-top: 3em; 
 }
 
+.projectSectionElement:last-of-type{
+    margin-bottom: 3em; 
+}
+
 .projectSectionElement{
     cursor: pointer; 
     color: white; 
@@ -67,8 +75,23 @@ footer{
     padding: 0.5em 0.5em; 
 }
 
+.projectSectionElement + .projectSectionElement{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .projectSectionElement:hover{
     background-color: rgb(58, 58, 58);
+}
+
+.projectSectionElement:hover img{
+    display: block;
+}
+
+.projectSectionElement img{
+    display: none; 
+    width: 19px; 
 }
 
 .addProject{
@@ -77,4 +100,27 @@ footer{
 
 .active {
     background-color: rgb(58, 58, 58);
+}
+
+.projectForm{ 
+    margin-top: 1em; 
+    display: none; 
+    justify-content: space-between;
+}
+
+.projectForm input{
+    width: 80%; 
+}
+
+.projectForm button{
+    cursor: pointer; 
+}
+
+.projectForm button, .projectForm input{
+    border-style: none;
+    background-color: white;
+}
+
+.visible{
+    display: flex;
 }
