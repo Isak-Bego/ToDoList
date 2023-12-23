@@ -1,7 +1,7 @@
 import Logo from './assets/todolist_logo.svg'; 
 import Bin from './assets/trashCan.png'
 import {add, getYear} from 'date-fns'; 
-import { removeAllChildNodes } from './helperFunctions';
+import { createDOM, removeAllChildNodes } from './helperFunctions';
 import {pm, dg, currentProject, setCurrentProject} from './index.js'; 
 
 export function DOMgenerator(){
@@ -37,10 +37,10 @@ export function DOMgenerator(){
             document.querySelector(".projectForm").classList.toggle("visible"); 
             event.stopImmediatePropagation(); 
         });
-        this.renderProject("All");  
+        this.renderProject("All", projects);  
         if (currentProject == "All") document.querySelectorAll(".projectSectionElement")[1].classList.toggle("active"); 
         for(let i = 0; i < projects.length; i++){
-            this.renderProject(projects[i].title); 
+            this.renderProject(projects[i].title, projects); 
         }
         this.renderAddProjectForm(); 
     }
@@ -48,6 +48,59 @@ export function DOMgenerator(){
     this.renderTaskSection = () => {
         let element = this.createDiv("taskSection"); 
         this.appendKid(".middleSectionOffset", element); 
+        pm.projects.forEach(project => {
+            for(let i = 0; i < project.toDoList.length; i++){
+                this.renderTask(project.toDoList[i]);
+            }
+        });
+    }
+
+    this.reRenderTaskSection = (currentProject,projects) => {
+        removeAllChildNodes(document.querySelector(".taskSection"));
+        if(currentProject != "All"){
+            this.renderAddTask(projects);
+        }
+        switch(currentProject){
+            case "All":{
+                projects.forEach(project => {
+                    for(let i = 0; i < project.toDoList.length; i++){
+                        console.log(project.toDoList[i]); 
+                    }
+                });  
+                break; 
+            }
+
+            case "Today":{
+                console.log("");
+                break; 
+            }
+
+            case "Weekly":{
+                console.log("");
+                break;
+            }
+
+            default: {
+                console.log("");
+            }
+        } 
+
+    }
+
+    this.renderTask = (toDo) => {
+        console.log(toDo);
+    }
+
+    this.renderAddTask = () => {
+        let addTsk = this.createDiv("addTask"); 
+        addTsk.innerText = "+ Add Task"; 
+        addTsk.addEventListener("click", (event) => {
+            pm.projects.filter(project => {
+                return project.title == currentProject; 
+            })[0].createForm(); 
+            event.stopPropagation(); 
+        });
+        this.appendKid(".taskSection", addTsk);
     }
 
     this.renderFooter = () => {
@@ -73,7 +126,7 @@ export function DOMgenerator(){
         return div; 
     }
 
-    this.renderProject = (title) => {
+    this.renderProject = (title, projects = null) => {
         let element = this.createDiv("projectSectionElement"); 
         element.innerText = title; 
         if(title != "All" && title != "+ Add Project" && title != "Today" && title != "Weekly"){
@@ -99,7 +152,8 @@ export function DOMgenerator(){
                         projectTiles[i].classList.remove('active'); 
                     }
                 }
-                console.log(currentProject); 
+                console.log(currentProject);    
+                this.reRenderTaskSection(currentProject, projects);
             }
             event.stopPropagation();
         })
@@ -130,6 +184,49 @@ export function DOMgenerator(){
             pm.addProject(title); 
             console.log("added"); 
             document.querySelector(".projectForm").classList.toggle("visible");
+            event.stopPropagation(); 
+        })
+    }
+
+    this.renderTaskForm = () => {
+        const categories = ["Title", "Description", "DueDate", "Priority"]; 
+        let form = this.createDiv("taskForm"); 
+        this.appendKid(".addTask", form); 
+        for(let i = 0; i <= 4; i++){  
+            this.appendKid(".taskForm", this.createDiv("wrapper")); 
+        }
+
+        let wrappers = document.querySelectorAll(".wrapper"); 
+
+        createDOM("p", [["class", "category"]], wrappers[0], "Title"); 
+        createDOM("input", [["id", "title"], ["type", "text"]], wrappers[0]);
+        createDOM("p", [["class", "category"]], wrappers[1], "Description"); 
+        createDOM("input", [["id", "desc"], ["type", "text"]], wrappers[1]);
+        createDOM("p", [["class", "category"]], wrappers[2], "Due Date"); 
+        createDOM("input", [["id", "datepicker"], ["type", "date"]], wrappers[2]); 
+        createDOM("p", [["class", "category"]], wrappers[3], "Priority"); 
+        // createDOM("div", [["class", "priorityHolder"]], wrappers[3]); 
+        wrappers[3].appendChild(this.createDiv("priorityHolder"));
+        createDOM("div", [["class", "priorityElement"]], document.querySelector(".priorityHolder"), "Low"); 
+        createDOM("div", [["class", "priorityElement"]], document.querySelector(".priorityHolder"), "Medium"); 
+        createDOM("div", [["class", "priorityElement"]], document.querySelector(".priorityHolder"), "High"); 
+        createDOM("button", [["id", "submit"]], wrappers[4], "Add");
+
+        let pe = document.querySelectorAll(".priorityElement"); 
+        for(let i = 0; i < pe.length; i++){
+            pe[i].addEventListener("click", () => {
+                pe[i].style.backgroundColor = "rgb(4, 130, 203)"; 
+                pe[i].style.color = "rgb(255, 255, 255)";
+                for(let j = 0; j < pe.length; j++){
+                    if(j != i){
+                        pe[j].style.backgroundColor = "rgb(255, 255, 255)"
+                        pe[j].style.color = "rgb(0, 0, 0)";
+                    }
+                }
+            })
+        }
+        
+        form.addEventListener("click", (event)=>{
             event.stopPropagation(); 
         })
     }

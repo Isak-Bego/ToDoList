@@ -1,5 +1,6 @@
 import {createDOM, removeDOM, parseDate, retrieveFromLS, saveToLS} from './helperFunctions.js'; 
 import todo from './todo.js'; 
+import {dg} from './index.js'; 
 
 export function Project(title){
     this.title = title;
@@ -36,7 +37,14 @@ export function Project(title){
             const description = document.querySelector("#desc").value; 
             const dateInfo = parseDate(document.querySelector("#datepicker").value); 
             const date = new Date(dateInfo[0], dateInfo[1], dateInfo[2]); 
-            const priority = document.querySelector("#priority").value; 
+            let priority;
+
+            let priorities = document.querySelectorAll(".priorityElement"); 
+            for(let i = 0; i < priorities.length; i++){
+                if(priorities[i].style.backgroundColor == "rgb(4, 130, 203)"){
+                    priority = priorities[i].innerText; 
+                }
+            }
 
             this.addToDo(todo(title, description, date, priority));  
             this.removeForm(); 
@@ -44,17 +52,14 @@ export function Project(title){
     }
 
     this.createForm = () => {
-        createDOM("input", [["id", "title"], ["type", "text"]], document.body);
-        createDOM("input", [["id", "desc"], ["type", "text"]], document.body); 
-        createDOM("input", [["id", "datepicker"], ["type", "date"]], document.body); 
-        createDOM("input", [["id", "priority"], ["type", "text"]], document.body); 
-        createDOM("button", [["id", "submit"]], document.body, "Submit");
-        this.awaitSubmission(); 
+        if(document.querySelector(".taskForm")){
+            document.querySelector(".addTask").removeChild(document.querySelector(".taskForm"));
+        }else{dg.renderTaskForm(); }
+        this.awaitSubmission();
     }
 
     this.removeForm = () => {
-        const id = ["title", "desc", "datepicker", "priority", "submit"]; 
-        for(let i = 0; i < id.length; i++) removeDOM(["id", id[i]]); 
+        document.querySelector(".addTask").removeChild(document.querySelector(".taskForm"));
     }
 
 }

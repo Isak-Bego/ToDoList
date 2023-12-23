@@ -28,7 +28,7 @@ footer{
 }
 
 .middleSection{
-    background-color: grey;
+    background-color: rgb(234, 234, 234);
     position: absolute;
     top: 4.3em; 
     bottom: 0px; 
@@ -50,12 +50,27 @@ footer{
 }
 
 .taskSection{
-    background: #999;
+    background: white;
     position: absolute;
+    display: flex;
+    flex-direction: column;
     right: 0;
     top: 0;
+    padding: 3em; 
     width: 70%;
     bottom: 0;
+}
+
+.addTask{
+    background-color: rgb(28, 27, 27);
+    color: white; 
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 0.5em 1em; 
+    width: fit-content;  
+    cursor: pointer; 
 }
 
 .projectSectionElement:first-of-type{
@@ -68,7 +83,7 @@ footer{
 
 .projectSectionElement{
     cursor: pointer; 
-    color: white; 
+    color: rgb(66, 66, 66); 
     width: 60%; 
     margin: auto; 
     margin-bottom: 0.5em; 
@@ -82,7 +97,8 @@ footer{
 }
 
 .projectSectionElement:hover{
-    background-color: rgb(58, 58, 58);
+    background-color: rgb(26, 176, 236);
+    color: white; 
 }
 
 .projectSectionElement:hover img{
@@ -96,10 +112,12 @@ footer{
 
 .addProject{
     background-color: rgb(32, 32, 32);
+    color: white; 
 }
 
 .active {
-    background-color: rgb(58, 58, 58);
+    background-color: rgb(4, 130, 203);
+    color: white;
 }
 
 .projectForm{ 
@@ -123,4 +141,36 @@ footer{
 
 .visible{
     display: flex;
+}
+
+.taskForm{
+    width: 100%;  
+    margin-top: 1em; 
+    display: flex;
+}
+
+.wrapper{
+    margin: 1em; 
+}
+
+.category{
+    margin-bottom: 0.5em; 
+}
+
+#desc{
+    height: 4em; 
+}
+
+.priorityElement{
+    background-color: #ffffff; 
+    color: black; 
+    margin-bottom: 0.5em; 
+    padding: 0.5em; 
+}
+
+#submit{
+    border-style: none;
+    padding: 0.5em 2.5em; 
+    background-color: white;
+    cursor: pointer; 
 }
