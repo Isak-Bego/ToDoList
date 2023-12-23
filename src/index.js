@@ -10,6 +10,10 @@ pm.initialize();
 dg.renderDocument(pm.projects); 
 
 
+export let setCurrentProject = (newVar) => {
+    currentProject = newVar; 
+}
+
 // let dueDateToday = retrieveDailyTasks(pm.projects);
 // let dueDateWeek = retrieveWeeklyTasks(pm.projects);
 

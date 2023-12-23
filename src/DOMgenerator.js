@@ -2,7 +2,7 @@ import Logo from './assets/todolist_logo.svg';
 import Bin from './assets/trashCan.png'
 import {add, getYear} from 'date-fns'; 
 import { removeAllChildNodes } from './helperFunctions';
-import {pm, dg, currentProject} from './index.js'; 
+import {pm, dg, currentProject, setCurrentProject} from './index.js'; 
 
 export function DOMgenerator(){
 
@@ -87,10 +87,19 @@ export function DOMgenerator(){
             })
         }
 
-        element.addEventListener("click", () => {
-            currentProject = title; 
-
+        element.addEventListener("click", (event) => {
+            element.classList.add('active'); 
+            setCurrentProject(title); 
+            //set Everything else to the default color
+            let projectTiles = document.querySelectorAll(".projectSectionElement"); 
+            for(let i = 1; i < projectTiles.length ; i++){
+                if(projectTiles[i].innerText != title){
+                    projectTiles[i].classList.remove('active'); 
+                }
+            }
+            event.stopPropagation(); 
         })
+    
         this.appendKid(".projectSection", element); 
         
     }
