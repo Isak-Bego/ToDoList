@@ -88,16 +88,19 @@ export function DOMgenerator(){
         }
 
         element.addEventListener("click", (event) => {
-            element.classList.add('active'); 
-            setCurrentProject(title); 
-            //set Everything else to the default color
-            let projectTiles = document.querySelectorAll(".projectSectionElement"); 
-            for(let i = 1; i < projectTiles.length ; i++){
-                if(projectTiles[i].innerText != title){
-                    projectTiles[i].classList.remove('active'); 
+            if(element.innerText != "+ Add Project"){
+                element.classList.add('active'); 
+                setCurrentProject(title); 
+                //set Everything else to the default color
+                let projectTiles = document.querySelectorAll(".projectSectionElement"); 
+                for(let i = 1; i < projectTiles.length ; i++){
+                    if(projectTiles[i].innerText != title){
+                        projectTiles[i].classList.remove('active'); 
+                    }
                 }
+                event.stopPropagation(); 
+                console.log(currentProject); 
             }
-            event.stopPropagation(); 
         })
     
         this.appendKid(".projectSection", element); 
