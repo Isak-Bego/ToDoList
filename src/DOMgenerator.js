@@ -35,6 +35,7 @@ export function DOMgenerator(){
         addProject.classList.add("addProject"); 
         addProject.addEventListener("click", (event) => {
             document.querySelector(".projectForm").classList.toggle("visible"); 
+            event.stopImmediatePropagation(); 
         });
         this.renderProject("All");  
         if (currentProject == "All") document.querySelectorAll(".projectSectionElement")[1].classList.toggle("active"); 
@@ -88,7 +89,7 @@ export function DOMgenerator(){
         }
 
         element.addEventListener("click", (event) => {
-            if(element.innerText != "+ Add Project"){
+            if(element != document.querySelector(".addProject")){
                 element.classList.add('active'); 
                 setCurrentProject(title); 
                 //set Everything else to the default color
@@ -98,9 +99,9 @@ export function DOMgenerator(){
                         projectTiles[i].classList.remove('active'); 
                     }
                 }
-                event.stopPropagation(); 
                 console.log(currentProject); 
             }
+            event.stopPropagation();
         })
     
         this.appendKid(".projectSection", element); 
