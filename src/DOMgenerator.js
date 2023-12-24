@@ -1,5 +1,6 @@
 import Logo from './assets/todolist_logo.svg'; 
-import Bin from './assets/trashCan.png'
+import Bin from './assets/trashCan.png';
+import Expand from './assets/expand.png';
 import {add, getYear} from 'date-fns'; 
 import { createDOM, removeAllChildNodes } from './helperFunctions';
 import {pm, dg, currentProject, setCurrentProject} from './index.js'; 
@@ -55,40 +56,85 @@ export function DOMgenerator(){
         });
     }
 
-    this.reRenderTaskSection = (currentProject,projects) => {
+    this.reRenderTaskSection = (currentProject) => {
         removeAllChildNodes(document.querySelector(".taskSection"));
         if(currentProject != "All"){
-            this.renderAddTask(projects);
+            this.renderAddTask(pm.projects);
         }
         switch(currentProject){
             case "All":{
-                projects.forEach(project => {
+                pm.projects.forEach(project => {
                     for(let i = 0; i < project.toDoList.length; i++){
-                        console.log(project.toDoList[i]); 
+                        this.renderTask(project.toDoList[i]); 
                     }
                 });  
                 break; 
             }
 
             case "Today":{
-                console.log("");
+                console.log("Today"); 
                 break; 
             }
 
             case "Weekly":{
-                console.log("");
+                console.log("Weekly");
                 break;
             }
 
             default: {
-                console.log("");
+                let proj = pm.projects.filter(el => {
+                    return el.title == currentProject; 
+                })[0];
+
+                proj.toDoList.forEach(td => {
+                    this.renderTask(td); 
+                })
             }
         } 
 
     }
 
     this.renderTask = (toDo) => {
-        console.log(toDo);
+        let master = this.createDiv("masterContainer"); 
+        let main = this.createDiv("mainTaskContainer"); 
+        let detail = this.createDiv("taskDetailContainer"); 
+        let priority = this.createDiv("taskPriorityContainer");
+        switch(toDo.priority){
+            case "Low":{
+                priority.style.backgroundColor = "rgb(57, 145, 109)"; 
+                break; 
+            }
+
+            case "Medium":{
+                priority.style.backgroundColor = "rgb(209, 124, 77)"; 
+                break; 
+            }
+
+            case "High":{
+                priority.style.backgroundColor = "rgb(100, 27, 48)"; 
+                break;
+            }
+        }
+        let title = document.createElement("p"); 
+        title.innerText = toDo.title; 
+        let actions = this.createDiv("taskActions"); 
+        let delIcon = document.createElement("img")
+        delIcon.src = Bin; 
+        let expandIcon = document.createElement("img");
+        expandIcon.src = Expand;  
+        let description = this.createDiv("taskDescriptionContainer");
+        description.innerText = toDo.description;  
+        document.querySelector(".taskSection").appendChild(master); 
+        master.appendChild(main); 
+        master.appendChild(description); 
+        main.appendChild(detail); 
+        main.appendChild(priority); 
+        detail.appendChild(title); 
+        detail.appendChild(actions); 
+        actions.appendChild(expandIcon); 
+        actions.appendChild(delIcon); 
+
+        
     }
 
     this.renderAddTask = () => {
@@ -153,7 +199,7 @@ export function DOMgenerator(){
                     }
                 }
                 console.log(currentProject);    
-                this.reRenderTaskSection(currentProject, projects);
+                this.reRenderTaskSection(currentProject);
             }
             event.stopPropagation();
         })

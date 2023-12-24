@@ -1,6 +1,6 @@
 import {createDOM, removeDOM, parseDate, retrieveFromLS, saveToLS} from './helperFunctions.js'; 
 import todo from './todo.js'; 
-import {dg} from './index.js'; 
+import {currentProject, dg} from './index.js'; 
 
 export function Project(title){
     this.title = title;
@@ -48,6 +48,7 @@ export function Project(title){
 
             this.addToDo(todo(title, description, date, priority));  
             this.removeForm(); 
+            dg.reRenderTaskSection(currentProject); 
         }); 
     }
 
