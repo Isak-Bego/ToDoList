@@ -2,8 +2,9 @@ import Logo from './assets/todolist_logo.svg';
 import Bin from './assets/trashCan.png';
 import Expand from './assets/expand.png';
 import {add, getYear} from 'date-fns'; 
-import { createDOM, removeAllChildNodes } from './helperFunctions';
+import { createDOM, removeAllChildNodes, retrieveDailyTasks, retrieveWeeklyTasks } from './helperFunctions';
 import {pm, dg, currentProject, setCurrentProject} from './index.js'; 
+import { da } from 'date-fns/locale';
 
 export function DOMgenerator(){
 
@@ -72,12 +73,26 @@ export function DOMgenerator(){
             }
 
             case "Today":{
-                console.log("Today"); 
+                let dailyArray = retrieveDailyTasks(pm.projects); 
+                let dailyTasks = []; 
+                for(let i = 0; i < dailyArray.length; i++){
+                    dailyTasks.push(dailyArray[i][1]); 
+                }
+                dailyTasks.forEach(el => {
+                    this.renderTask(el); 
+                })
                 break; 
             }
 
             case "Weekly":{
-                console.log("Weekly");
+                let weeklyArray = retrieveWeeklyTasks(pm.projects); 
+                let weeklyTasks = []; 
+                for(let i = 0; i < weeklyArray.length; i++){
+                    weeklyTasks.push(weeklyArray[i][1]); 
+                }
+                weeklyTasks.forEach(el => {
+                    this.renderTask(el); 
+                })
                 break;
             }
 
@@ -117,6 +132,9 @@ export function DOMgenerator(){
         }
         let title = document.createElement("p"); 
         title.innerText = toDo.title; 
+        if(toDo.done){
+            title.style.textDecoration = "line-through"; 
+        }
         let actions = this.createDiv("taskActions"); 
         let delIcon = document.createElement("img")
         delIcon.src = Bin; 
@@ -183,6 +201,7 @@ export function DOMgenerator(){
                 pm.deleteProject(title); 
                 removeAllChildNodes(document.querySelector(".projectSection")); 
                 this.renderProjectSection(pm.projects); 
+                this.reRenderTaskSection(currentProject); 
                 event.stopPropagation(); 
             })
         }
