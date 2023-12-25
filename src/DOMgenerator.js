@@ -132,6 +132,15 @@ export function DOMgenerator(){
         }
         let title = document.createElement("p"); 
         title.innerText = toDo.title; 
+
+        title.addEventListener("click", (event) => {
+            let cp = pm.projects.filter(el => {
+                return el.title == toDo.projectName; 
+            })[0]; 
+            cp.toggleDone(currentProject, toDo); 
+            event.stopPropagation(); 
+        });
+
         if(toDo.done){
             title.style.textDecoration = "line-through"; 
         }
@@ -139,7 +148,7 @@ export function DOMgenerator(){
         let delIcon = document.createElement("img")
         delIcon.src = Bin; 
         let expandIcon = document.createElement("img");
-        expandIcon.src = Expand;  
+        expandIcon.src = Expand;   
         let description = this.createDiv("taskDescriptionContainer");
         description.innerText = toDo.description;  
         document.querySelector(".taskSection").appendChild(master); 

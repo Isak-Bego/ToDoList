@@ -46,7 +46,7 @@ export function Project(title){
                 }
             }
 
-            this.addToDo(todo(title, description, date, priority));  
+            this.addToDo(todo(this.title, title, description, date, priority));  
             this.removeForm(); 
             dg.reRenderTaskSection(currentProject); 
         }); 
@@ -61,6 +61,13 @@ export function Project(title){
 
     this.removeForm = () => {
         document.querySelector(".addTask").removeChild(document.querySelector(".taskForm"));
+    }
+
+    this.toggleDone = (currentProject, toDo) => {
+        let i = this.toDoList.indexOf(toDo); 
+        this.toDoList[i].done = (!this.toDoList[i].done); 
+        saveToLS(title, [this.order, this.toDoList]);
+        dg.reRenderTaskSection(currentProject); 
     }
 
 }
