@@ -1,218 +1,228 @@
-*{
-    box-sizing: border-box;
-    margin: 0; 
-    font-family: 'DM Sans';
+* {
+  box-sizing: border-box;
+  margin: 0;
+  font-family: "DM Sans";
 }
 
-body{
-    overflow: hidden;
+body {
+  overflow: hidden;
 }
 
-header{
-    background-color: black;
-    padding-top: 0.65em;
-    display: flex; 
+header {
+  background-color: black;
+  padding-top: 0.65em;
+  display: flex;
 }
 
-header img{
-    width: 15em; 
-    margin: auto; 
+header img {
+  width: 15em;
+  margin: auto;
 }
 
-footer{
-    background-color: black; 
-    color: white; 
-    position: absolute;
-    bottom: 0; 
-    width: 100%; 
-    text-align: center;
+footer {
+  background-color: black;
+  color: white;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
 }
 
-.middleSection{
-    background-color: rgb(234, 234, 234);
-    position: absolute;
-    top: 4.3em; 
-    bottom: 0px; 
-    width: 100%; 
+.middleSection {
+  background-color: rgb(234, 234, 234);
+  position: absolute;
+  top: 4.3em;
+  bottom: 0px;
+  width: 100%;
 }
 
-.middleSectionOffset{
-    position: relative;
-    height: 100%;
+.middleSectionOffset {
+  position: relative;
+  height: 100%;
 }
 
-.projectSection, .taskSection{
-    overflow-y: scroll;
+.projectSection,
+.taskSection {
+  overflow-y: scroll;
 }
 
-.projectSection{
-    width: 30%;
-    height: 100%;
+.projectSection {
+  width: 30%;
+  height: 100%;
 }
 
-.taskSection{
-    background: white;
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    right: 0;
-    top: 0;
-    padding: 3em; 
-    width: 70%;
-    bottom: 0;
+.taskSection {
+  background: white;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  right: 0;
+  top: 0;
+  padding: 3em;
+  width: 70%;
+  bottom: 0;
 }
 
-.addTask{
-    background-color: rgb(28, 27, 27);
-    color: white; 
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    padding: 0.5em 1em; 
-    width: fit-content;  
-    cursor: pointer; 
-    margin-bottom: 1em;
+.addTask {
+  background-color: rgb(28, 27, 27);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 0.5em 1em;
+  width: fit-content;
+  cursor: pointer;
+  margin-bottom: 1em;
 }
 
-.projectSectionElement:first-of-type{
-    margin-top: 3em; 
+.projectSectionElement:first-of-type {
+  margin-top: 3em;
 }
 
-.projectSectionElement:last-of-type{
-    margin-bottom: 3em; 
+.projectSectionElement:last-of-type {
+  margin-bottom: 3em;
 }
 
-.projectSectionElement{
-    cursor: pointer; 
-    color: rgb(66, 66, 66); 
-    width: 60%; 
-    margin: auto; 
-    margin-bottom: 0.5em; 
-    padding: 0.5em 0.5em; 
+.projectSectionElement {
+  cursor: pointer;
+  color: rgb(66, 66, 66);
+  width: 60%;
+  margin: auto;
+  margin-bottom: 0.5em;
+  padding: 0.5em 0.5em;
 }
 
-.projectSectionElement + .projectSectionElement{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.projectSectionElement + .projectSectionElement {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.projectSectionElement:hover{
-    background-color: rgb(26, 176, 236);
-    color: white; 
+.projectSectionElement:hover {
+  background-color: rgb(26, 176, 236);
+  color: white;
 }
 
-.projectSectionElement:hover img{
-    display: block;
+.projectSectionElement:hover img {
+  display: block;
 }
 
-.projectSectionElement img{
-    display: none; 
-    width: 19px; 
+.projectSectionElement img {
+  display: none;
+  width: 19px;
 }
 
-.addProject{
-    background-color: rgb(32, 32, 32);
-    color: white; 
+.addProject {
+  background-color: rgb(32, 32, 32);
+  color: white;
 }
 
 .active {
-    background-color: rgb(4, 130, 203);
-    color: white;
+  background-color: rgb(4, 130, 203);
+  color: white;
 }
 
-.projectForm{ 
-    margin-top: 1em; 
-    display: none; 
-    justify-content: space-between;
+.projectForm {
+  margin-top: 1em;
+  display: none;
+  justify-content: space-between;
 }
 
-.projectForm input{
-    width: 80%; 
+.projectForm input {
+  width: 80%;
 }
 
-.projectForm button{
-    cursor: pointer; 
+.projectForm button {
+  cursor: pointer;
 }
 
-.projectForm button, .projectForm input{
-    border-style: none;
-    background-color: white;
+.projectForm button,
+.projectForm input {
+  border-style: none;
+  background-color: white;
 }
 
-.visible{
-    display: flex;
+.visible {
+  display: flex;
 }
 
-.taskForm{
-    width: 100%;  
-    margin-top: 1em; 
-    display: flex;
-    flex-wrap: wrap;
+.taskForm {
+  width: 100%;
+  margin-top: 1em;
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.wrapper{
-    margin: 1em; 
+.wrapper {
+  margin: 1em;
 }
 
-.category{
-    margin-bottom: 0.5em; 
+.category {
+  margin-bottom: 0.5em;
 }
 
-#desc{
-    height: 4em; 
+#desc {
+  height: 4em;
 }
 
-.priorityElement{
-    background-color: #ffffff; 
-    color: black; 
-    margin-bottom: 0.5em; 
-    padding: 0.5em; 
+.priorityElement {
+  background-color: #ffffff;
+  color: black;
+  margin-bottom: 0.5em;
+  padding: 0.5em;
 }
 
-#submit{
-    border-style: none;
-    padding: 0.5em 2.5em; 
-    background-color: white;
-    cursor: pointer; 
+#submit {
+  border-style: none;
+  padding: 0.5em 2.5em;
+  background-color: white;
+  cursor: pointer;
 }
 
-
-.masterContainer{
-    background-color: rgb(53, 53, 53);
-    margin-bottom: 1em;
-    color: white; 
+.masterContainer {
+  background-color: rgb(53, 53, 53);
+  margin-bottom: 1em;
+  color: white;
 }
 
-.mainTaskContainer{
-    display: flex; 
+.mainTaskContainer {
+  display: flex;
 }
 
-.taskDetailContainer{
-    width: 100%; 
-    padding: 1em; 
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.taskDetailContainer {
+  width: 100%;
+  padding: 1em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.taskDetailContainer p{
-    cursor: pointer; 
+.taskDetailContainer p {
+  cursor: pointer;
 }
 
-.taskPriorityContainer{
-    width: 1em; 
-    background-color: red;
+.taskPriorityContainer {
+  width: 1em;
+  background-color: red;
 }
 
-.taskActions img{
-    width: 30px; 
-    margin-left: 1em; 
-    cursor: pointer; 
+.taskActions img {
+  width: 30px;
+  margin-left: 1em;
+  cursor: pointer;
 }
 
-.taskDescriptionContainer{
-    padding-top: 1em; 
-    display: none; 
+.taskDescriptionContainer {
+  padding: 1em;
+  background-color: rgb(99, 99, 99);
+  display: none;
+}
+
+.doneColor {
+  color: rgb(57, 145, 109);
+}
+
+.visibleDC {
+  display: block;
 }
